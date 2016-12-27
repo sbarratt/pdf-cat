@@ -1,0 +1,40 @@
+#!/usr/bin/env python
+
+'''
+usage: pdf-cat <first.pdf> [<next.pdf> ...] -o <outputfile.pdf>
+Prints new pdf to <outputfile.pdf>
+This file demonstrates two features:
+1) Concatenating multiple input PDFs.
+2) adding metadata to the PDF.
+'''
+
+import sys
+import os
+
+from pdfrw import PdfReader, PdfWriter, IndirectPdfDict
+import argparse
+
+parser = argparse.ArgumentParser(description='')
+parser.add_argument('files', metavar='file.pdf', type=str, nargs='+',
+                            help='List of pdf files to concatenate.')
+parser.add_argument('-o', dest='outputfile', default='output.pdf',
+                            help='Name of output file.')
+
+args = parser.parse_args()
+
+inputs = args.files
+outfn = args.outputfile
+
+assert inputs
+
+writer = PdfWriter()
+for inpfn in inputs:
+    writer.addpages(PdfReader(inpfn).pages)
+
+writer.trailer.Info = IndirectPdfDict(
+    Title='Title',
+    Author='Name',
+    Subject='Subject',
+    Creator='Creator',
+)
+writer.write(outfn)

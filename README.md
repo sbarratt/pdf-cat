@@ -1,9 +1,16 @@
 # pdf-cat
 
+## Installation:
+
+```bash
+$ chmod +x install.sh
+$ sudo ./install.sh
+```
+
 ## Usage:
 
 ```bash
 $ pdf-cat 1.pdf 2.pdf -o concatenated.pdf
 ```
 
-Takes "1.pdf" and "2.pdf" and concatenates them into "concatenated.pdf".
+Takes "1.pdf" and "2.pdf", concatenates them, and makes the resulting file "concatenated.pdf".
